@@ -6,6 +6,8 @@ function redactSecrets(message) {
     'JWT_SECRET',
     'CLOUDINARY_API_KEY',
     'CLOUDINARY_API_SECRET',
+    'SMTP_PASSWORD',
+    'CRON_SECRET',
   ]) {
     const secret = process.env[key]
     if (secret) {

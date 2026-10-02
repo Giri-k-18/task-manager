@@ -63,6 +63,24 @@ function getOwnedPublicId(imageUrl, userId) {
   }
 }
 
+function createThumbnailUrl(cloudinary, publicId) {
+  return cloudinary.url(publicId, {
+    secure: true,
+    transformation: [{ width: 150, height: 150, crop: 'fill', quality: 'auto', fetch_format: 'auto' }],
+  })
+}
+
+function getTaskThumbnailUrl(imageUrl, userId) {
+  const publicId = getOwnedPublicId(imageUrl, userId)
+  if (!publicId) return null
+
+  try {
+    return createThumbnailUrl(getCloudinary(), publicId)
+  } catch {
+    return null
+  }
+}
+
 function uploadTaskImage(buffer, userId) {
   const cloudinary = getCloudinary()
   const publicId = `task-manager/${userId}/${randomUUID()}`
@@ -79,10 +97,7 @@ function uploadTaskImage(buffer, userId) {
           return reject(error)
         }
 
-        const thumbnailUrl = cloudinary.url(result.public_id, {
-          secure: true,
-          transformation: [{ width: 150, height: 150, crop: 'fill', quality: 'auto', fetch_format: 'auto' }],
-        })
+        const thumbnailUrl = createThumbnailUrl(cloudinary, result.public_id)
 
         return resolve({ imageUrl: result.secure_url, thumbnailUrl })
       },
@@ -114,4 +129,10 @@ async function deleteTaskImage(imageUrl, userId) {
   }
 }
 
-module.exports = { deleteTaskImage, detectImageMime, getOwnedPublicId, uploadTaskImage }
+module.exports = {
+  deleteTaskImage,
+  detectImageMime,
+  getOwnedPublicId,
+  getTaskThumbnailUrl,
+  uploadTaskImage,
+}

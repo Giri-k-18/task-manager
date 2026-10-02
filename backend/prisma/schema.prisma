@@ -25,6 +25,8 @@ model Task {
   status      String    @default("pending") @db.VarChar(20)
   dueDate     DateTime? @map("due_date") @db.Timestamp(3)
   imageUrl    String?   @map("image_url") @db.VarChar(512)
+  reminderClaimedAt DateTime? @map("reminder_claimed_at") @db.Timestamp(3)
+  reminderSentAt DateTime? @map("reminder_sent_at") @db.Timestamp(3)
   ownerId     String    @map("owner_id") @db.Uuid
   createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(3)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(3)

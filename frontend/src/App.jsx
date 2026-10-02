@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Menu, X } from 'lucide-react'
+import { filterTasks } from './taskFilters.js'
 import './App.css'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:4000'
@@ -22,6 +24,7 @@ function formatDate(value) {
 
   return new Intl.DateTimeFormat('en-IN', {
     dateStyle: 'medium',
+    timeZone: 'UTC',
   }).format(date)
 }
 
@@ -39,15 +42,30 @@ function readStoredSession() {
   }
 }
 
+function Toast({ toast, onDismiss }) {
+  if (!toast) return null
+
+  return (
+    <div className={`toast ${toast.type}`} role={toast.type === 'error' ? 'alert' : 'status'}>
+      <span>{toast.message}</span>
+      <button type="button" onClick={onDismiss} aria-label="Dismiss notification">
+        ×
+      </button>
+    </div>
+  )
+}
+
 function App() {
   const [session, setSession] = useState(() => readStoredSession())
   const [authMode, setAuthMode] = useState('login')
-  const [authForm, setAuthForm] = useState({ email: 'demo@example.com', password: 'Demo@123' })
+  const [authForm, setAuthForm] = useState({ email: '', password: '' })
   const [authError, setAuthError] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
   const [tasks, setTasks] = useState([])
   const [taskFilter, setTaskFilter] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const [dueDateFilter, setDueDateFilter] = useState('')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDark, setIsDark] = useState(() => localStorage.getItem(THEME_STORAGE_KEY) === 'dark')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
@@ -55,6 +73,16 @@ function App() {
   const [taskError, setTaskError] = useState('')
   const [taskLoading, setTaskLoading] = useState(false)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [toast, setToast] = useState(null)
+
+  const notify = (message, type = 'success') => setToast({ message, type })
+
+  useEffect(() => {
+    if (!toast) return undefined
+
+    const timeoutId = window.setTimeout(() => setToast(null), 5000)
+    return () => window.clearTimeout(timeoutId)
+  }, [toast])
 
   useEffect(() => {
     document.body.dataset.theme = isDark ? 'dark' : 'light'
@@ -62,10 +90,7 @@ function App() {
   }, [isDark])
 
   useEffect(() => {
-    if (!session?.token) {
-      setTasks([])
-      return
-    }
+    if (!session?.token) return
 
     const fetchTasks = async () => {
       try {
@@ -83,6 +108,7 @@ function App() {
         setTasks(payload.tasks || [])
       } catch (error) {
         setTaskError(error.message)
+        notify('Could not load your tasks', 'error')
       }
     }
 
@@ -90,13 +116,12 @@ function App() {
   }, [session])
 
   const filteredTasks = useMemo(() => {
-    return tasks.filter((task) => {
-      const matchesFilter = taskFilter === 'all' || task.status === taskFilter
-      const haystack = `${task.title} ${task.description || ''}`.toLowerCase()
-      const matchesSearch = haystack.includes(searchTerm.toLowerCase())
-      return matchesFilter && matchesSearch
+    return filterTasks(tasks, {
+      status: taskFilter,
+      searchTerm,
+      dueDate: dueDateFilter,
     })
-  }, [tasks, taskFilter, searchTerm])
+  }, [tasks, taskFilter, searchTerm, dueDateFilter])
 
   const taskStats = useMemo(() => {
     return {
@@ -141,6 +166,7 @@ function App() {
       setAuthForm({ email: '', password: '' })
     } catch (error) {
       setAuthError(error.message)
+      notify('Could not authenticate', 'error')
     } finally {
       setAuthLoading(false)
     }
@@ -150,6 +176,7 @@ function App() {
     localStorage.removeItem(AUTH_STORAGE_KEY)
     setSession(null)
     setTasks([])
+    setIsMobileMenuOpen(false)
   }
 
   const openCreateModal = () => {
@@ -252,11 +279,13 @@ function App() {
         : [result.task, ...tasks]
 
       setTasks(updatedList)
+      notify(editingTask ? 'Task updated' : 'Task created')
       setIsModalOpen(false)
       setTaskForm(EMPTY_FORM)
       setEditingTask(null)
     } catch (error) {
       setTaskError(error.message)
+      notify('Could not save task', 'error')
     } finally {
       setTaskLoading(false)
     }
@@ -279,8 +308,10 @@ function App() {
       }
 
       setTasks((current) => current.filter((task) => task.id !== taskId))
+      notify('Task deleted')
     } catch (error) {
       setTaskError(error.message)
+      notify('Could not delete task', 'error')
     }
   }
 
@@ -304,80 +335,87 @@ function App() {
       setTasks((current) =>
         current.map((task) => (task.id === taskId ? payload.task : task)),
       )
+      notify('Task status updated')
     } catch (error) {
       setTaskError(error.message)
+      notify('Could not update task status', 'error')
     }
   }
 
   if (!session) {
     return (
-      <div className="auth-shell">
-        <div className="ambient ambient-one" />
-        <div className="ambient ambient-two" />
-        <div className="auth-card reveal-card">
-          <div className="brand-row">
-            <div className="brand-mark">T</div>
-            <div>
-              <p className="eyebrow">Task Manager</p>
-              <h1>Welcome back</h1>
+      <>
+        <Toast toast={toast} onDismiss={() => setToast(null)} />
+        <div className="auth-shell">
+          <div className="ambient ambient-one" />
+          <div className="ambient ambient-two" />
+          <div className="auth-card reveal-card">
+            <div className="brand-row">
+              <div className="brand-mark">T</div>
+              <div>
+                <p className="eyebrow">Task Manager</p>
+                <h1>Welcome back</h1>
+              </div>
             </div>
+
+            <div className="auth-toggle" role="tablist" aria-label="Authentication mode">
+              <button
+                type="button"
+                className={authMode === 'login' ? 'mode active' : 'mode'}
+                onClick={() => setAuthMode('login')}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                className={authMode === 'register' ? 'mode active' : 'mode'}
+                onClick={() => setAuthMode('register')}
+              >
+                Register
+              </button>
+            </div>
+
+            <form className="auth-form" onSubmit={handleAuthSubmit}>
+              <label>
+                Email
+                <input
+                  type="email"
+                  value={authForm.email}
+                  onChange={(event) => setAuthForm((current) => ({ ...current, email: event.target.value }))}
+                  placeholder="you@example.com"
+                  required
+                />
+              </label>
+
+              <label>
+                Password
+                <input
+                  type="password"
+                  value={authForm.password}
+                  onChange={(event) => setAuthForm((current) => ({ ...current, password: event.target.value }))}
+                  placeholder="Enter your password"
+                  required
+                />
+              </label>
+
+              {authError ? <p className="form-error">{authError}</p> : null}
+
+              <button type="submit" className="primary-button" disabled={authLoading}>
+                {authLoading ? 'Please wait...' : authMode === 'login' ? 'Login' : 'Create account'}
+              </button>
+            </form>
           </div>
-
-          <div className="auth-toggle" role="tablist" aria-label="Authentication mode">
-            <button
-              type="button"
-              className={authMode === 'login' ? 'mode active' : 'mode'}
-              onClick={() => setAuthMode('login')}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className={authMode === 'register' ? 'mode active' : 'mode'}
-              onClick={() => setAuthMode('register')}
-            >
-              Register
-            </button>
-          </div>
-
-          <form className="auth-form" onSubmit={handleAuthSubmit}>
-            <label>
-              Email
-              <input
-                type="email"
-                value={authForm.email}
-                onChange={(event) => setAuthForm((current) => ({ ...current, email: event.target.value }))}
-                placeholder="you@example.com"
-                required
-              />
-            </label>
-
-            <label>
-              Password
-              <input
-                type="password"
-                value={authForm.password}
-                onChange={(event) => setAuthForm((current) => ({ ...current, password: event.target.value }))}
-                placeholder="Enter your password"
-                required
-              />
-            </label>
-
-            {authError ? <p className="form-error">{authError}</p> : null}
-
-            <button type="submit" className="primary-button" disabled={authLoading}>
-              {authLoading ? 'Please wait...' : authMode === 'login' ? 'Login' : 'Create account'}
-            </button>
-          </form>
         </div>
-      </div>
+      </>
     )
   }
 
   return (
-    <div className="dashboard-shell">
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
+    <>
+      <Toast toast={toast} onDismiss={() => setToast(null)} />
+      <div className="dashboard-shell">
+        <div className="ambient ambient-one" />
+        <div className="ambient ambient-two" />
       <header className="topbar reveal-card">
         <div className="brand-row">
           <div className="brand-mark">T</div>
@@ -387,7 +425,21 @@ function App() {
           </div>
         </div>
 
-        <div className="topbar-actions">
+        <button
+          type="button"
+          className="mobile-menu-toggle"
+          aria-controls="dashboard-mobile-menu"
+          aria-expanded={isMobileMenuOpen}
+          onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+        >
+          {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          <span>{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
+        </button>
+
+        <div
+          id="dashboard-mobile-menu"
+          className={isMobileMenuOpen ? 'topbar-actions open' : 'topbar-actions'}
+        >
           <input
             type="search"
             className="search-input"
@@ -440,6 +492,17 @@ function App() {
             ))}
           </div>
 
+          <label className="date-filter-label">
+            Due date
+            <input
+              className="date-filter"
+              type="date"
+              value={dueDateFilter}
+              onChange={(event) => setDueDateFilter(event.target.value)}
+              aria-label="Filter tasks by due date"
+            />
+          </label>
+
           <button type="button" className="primary-button" onClick={openCreateModal}>
             + New task
           </button>
@@ -457,7 +520,7 @@ function App() {
             filteredTasks.map((task) => (
               <article key={task.id} className="task-card reveal-card">
                 {task.imageUrl ? (
-                  <img src={task.imageUrl} alt={task.title} className="task-image" />
+                  <img src={task.thumbnailUrl || task.imageUrl} alt={task.title} className="task-image" />
                 ) : null}
 
                 <div className="task-content">
@@ -580,7 +643,8 @@ function App() {
           </div>
         </div>
       ) : null}
-    </div>
+      </div>
+    </>
   )
 }
 

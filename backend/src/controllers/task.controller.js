@@ -1,5 +1,9 @@
 const prisma = require('../config/prisma')
-const { deleteTaskImage, getOwnedPublicId } = require('../services/cloudinary.service')
+const {
+  deleteTaskImage,
+  getOwnedPublicId,
+  getTaskThumbnailUrl,
+} = require('../services/cloudinary.service')
 
 const taskSelect = {
   id: true,
@@ -12,6 +16,13 @@ const taskSelect = {
   updatedAt: true,
 }
 
+function serializeTask(task, userId) {
+  return {
+    ...task,
+    thumbnailUrl: task.imageUrl ? getTaskThumbnailUrl(task.imageUrl, userId) : null,
+  }
+}
+
 async function listTasks(request, response, next) {
   try {
     const tasks = await prisma.task.findMany({
@@ -20,7 +31,9 @@ async function listTasks(request, response, next) {
       select: taskSelect,
     })
 
-    return response.status(200).json({ tasks })
+    return response.status(200).json({
+      tasks: tasks.map((task) => serializeTask(task, request.user.id)),
+    })
   } catch (error) {
     return next(error)
   }
@@ -40,7 +53,7 @@ async function createTask(request, response, next) {
       select: taskSelect,
     })
 
-    return response.status(201).json({ task })
+    return response.status(201).json({ task: serializeTask(task, request.user.id) })
   } catch (error) {
     return next(error)
   }
@@ -57,7 +70,7 @@ async function getTask(request, response, next) {
       return response.status(404).json({ error: 'Task not found' })
     }
 
-    return response.status(200).json({ task })
+    return response.status(200).json({ task: serializeTask(task, request.user.id) })
   } catch (error) {
     return next(error)
   }
@@ -66,7 +79,10 @@ async function getTask(request, response, next) {
 async function updateTask(request, response, next) {
   try {
     const where = { id: request.validatedParams.id, ownerId: request.user.id }
-    const existingTask = await prisma.task.findFirst({ where, select: { imageUrl: true } })
+    const existingTask = await prisma.task.findFirst({
+      where,
+      select: { dueDate: true, imageUrl: true },
+    })
 
     if (!existingTask) {
       return response.status(404).json({ error: 'Task not found' })
@@ -79,9 +95,17 @@ async function updateTask(request, response, next) {
       return response.status(400).json({ error: 'Image must belong to the authenticated user' })
     }
 
+    const previousDueDate = existingTask.dueDate?.getTime() ?? null
+    const nextDueDate = request.validatedBody.dueDate === undefined
+      ? previousDueDate
+      : request.validatedBody.dueDate?.getTime() ?? null
+    const dueDateChanged = previousDueDate !== nextDueDate
     const result = await prisma.task.updateMany({
       where,
-      data: request.validatedBody,
+      data: {
+        ...request.validatedBody,
+        ...(dueDateChanged ? { reminderClaimedAt: null, reminderSentAt: null } : {}),
+      },
     })
 
     if (result.count === 0) {
@@ -102,7 +126,7 @@ async function updateTask(request, response, next) {
       }
     }
 
-    return response.status(200).json({ task })
+    return response.status(200).json({ task: serializeTask(task, request.user.id) })
   } catch (error) {
     return next(error)
   }

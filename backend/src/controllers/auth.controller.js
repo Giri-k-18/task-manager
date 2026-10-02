@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const prisma = require('../config/prisma')
 const { createAccessToken, getJwtSecret } = require('../config/jwt')
+const { sendWelcomeEmail } = require('../services/email.service')
 
 async function register(request, response, next) {
   try {
@@ -12,6 +13,12 @@ async function register(request, response, next) {
       data: { email, passwordHash },
       select: { id: true, email: true },
     })
+
+    try {
+      await sendWelcomeEmail(user.email)
+    } catch {
+      console.error('Welcome email delivery failed')
+    }
 
     return response.status(201).json({
       message: 'Registration successful',

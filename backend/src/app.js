@@ -4,6 +4,7 @@ const prisma = require('./config/prisma')
 const authRoutes = require('./routes/auth.routes')
 const taskRoutes = require('./routes/task.routes')
 const uploadRoutes = require('./routes/upload.routes')
+const cronRoutes = require('./routes/cron.routes')
 const errorHandler = require('./middleware/errorHandler')
 
 const app = express()
@@ -56,6 +57,7 @@ app.use('/tasks', taskRoutes)
 app.use('/api/tasks', taskRoutes)
 app.use('/uploads', uploadRoutes)
 app.use('/api/uploads', uploadRoutes)
+app.use('/api/cron', cronRoutes)
 app.use(errorHandler)
 
 module.exports = app
