@@ -1,0 +1,109 @@
+:root {
+  color: #0f172a;
+  background-color: #f8fafc;
+  font-family: Inter, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #f8fafc;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+body[data-theme='dark'] {
+  background: #020817;
+  color: #e2e8f0;
+}
+
+body[data-theme='dark'] .auth-card,
+body[data-theme='dark'] .task-card,
+body[data-theme='dark'] .stat-card,
+body[data-theme='dark'] .task-modal,
+body[data-theme='dark'] .empty-state {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+body[data-theme='dark'] .auth-card h1,
+body[data-theme='dark'] .task-card h3,
+body[data-theme='dark'] .empty-state h3,
+body[data-theme='dark'] .task-modal h3,
+body[data-theme='dark'] .brand-row h2,
+body[data-theme='dark'] .topbar h2,
+body[data-theme='dark'] .stat-card strong,
+body[data-theme='dark'] .task-header h3,
+body[data-theme='dark'] .task-description,
+body[data-theme='dark'] .auth-card label,
+body[data-theme='dark'] .task-form label,
+body[data-theme='dark'] .task-date,
+body[data-theme='dark'] .task-actions select,
+body[data-theme='dark'] .search-input,
+body[data-theme='dark'] .task-form input,
+body[data-theme='dark'] .task-form textarea,
+body[data-theme='dark'] .task-form select,
+body[data-theme='dark'] .auth-form input {
+  color: #e2e8f0;
+}
+
+body[data-theme='dark'] .auth-form input,
+body[data-theme='dark'] .task-form input,
+body[data-theme='dark'] .task-form textarea,
+body[data-theme='dark'] .task-form select,
+body[data-theme='dark'] .search-input,
+body[data-theme='dark'] .task-actions select {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+body[data-theme='dark'] .auth-shell {
+  background: linear-gradient(135deg, #020817 0%, #0f172a 100%);
+}
+
+body[data-theme='dark'] .auth-card,
+body[data-theme='dark'] .task-card,
+body[data-theme='dark'] .stat-card,
+body[data-theme='dark'] .task-modal,
+body[data-theme='dark'] .empty-state,
+body[data-theme='dark'] .search-input,
+body[data-theme='dark'] .filter,
+body[data-theme='dark'] .ghost-button,
+body[data-theme='dark'] .primary-button,
+body[data-theme='dark'] .secondary-button {
+  box-shadow: none;
+}
+
+body[data-theme='dark'] .filter {
+  background: rgba(148, 163, 184, 0.12);
+  color: #e2e8f0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button:hover {
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+#root {
+  min-height: 100vh;
+}
