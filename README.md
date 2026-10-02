@@ -67,7 +67,7 @@ Without SMTP configuration, registration still works but welcome email delivery 
 
 Deploy the monorepo as two Vercel projects connected to this GitHub repository:
 
-1. **Backend project:** set the project Root Directory to `backend`. Add `DATABASE_URL`, `JWT_SECRET`, all three Cloudinary variables, `FRONTEND_ORIGIN`, SMTP variables, `EMAIL_FROM`, `APP_URL`, and `CRON_SECRET` in the Vercel dashboard.
+1. **Backend project:** set the project Root Directory to `backend`. The install `postinstall` generates Prisma Client. Add `DATABASE_URL`, `JWT_SECRET`, all three Cloudinary variables, `FRONTEND_ORIGIN`, SMTP variables, `EMAIL_FROM`, `APP_URL`, and `CRON_SECRET` in the Vercel dashboard.
 2. Apply the database migration using `npm run db:deploy` from the backend package with the production `DATABASE_URL`. Do this before enabling reminder traffic; do not use `db:migrate` against production.
 3. **Frontend project:** set Root Directory to `frontend` and configure `VITE_API_URL` to the deployed backend origin, for example `https://your-api.vercel.app`.
 4. After the frontend URL is assigned, set backend `FRONTEND_ORIGIN` and `APP_URL` to that exact URL and redeploy the backend.
