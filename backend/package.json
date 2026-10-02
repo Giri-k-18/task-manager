@@ -11,6 +11,7 @@
     "db:validate": "prisma validate",
     "db:generate": "prisma generate",
     "db:deploy": "prisma migrate deploy",
+    "db:seed-demo": "node src/scripts/seedDemoUser.js",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio"
   },

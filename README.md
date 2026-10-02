@@ -77,7 +77,7 @@ Connecting both Vercel projects to GitHub enables preview and production deploym
 
 ## Email and Demo Account
 
-The backend provides inline-styled welcome and due-date reminder templates. Configure SMTP to enable delivery. A dedicated demo account is not seeded automatically; create one on the deployed app and include its test credentials in the final submission notes. Do not reuse personal credentials.
+The backend provides inline-styled welcome and due-date reminder templates. Configure SMTP to enable delivery. To prepare a demo account, set unique `DEMO_EMAIL` and `DEMO_PASSWORD` values in the backend environment, then run `npm.cmd --prefix backend run db:seed-demo` against the database you intend to demonstrate. The command hashes the password and upserts the account. Keep the actual credentials out of Git; provide them only in private submission notes as required.
 
 ## Checks
 
