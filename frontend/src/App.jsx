@@ -397,6 +397,18 @@ function App() {
                   required
                 />
               </label>
+              <label className="email-warning-checkbox">
+  <input
+    type="checkbox"
+    required
+  />
+  <span>
+    I understand that Task Manager emails may sometimes be
+    delivered to my Spam/Junk folder.
+  </span>
+  
+</label>
+
 
               {authError ? <p className="form-error">{authError}</p> : null}
 

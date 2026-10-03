@@ -15,10 +15,14 @@ async function register(request, response, next) {
     })
 
     try {
-      await sendWelcomeEmail(user.email)
-    } catch {
-      console.error('Welcome email delivery failed')
-    }
+  console.log('Sending welcome email to:', user.email)
+
+  const emailSent = await sendWelcomeEmail(user.email)
+
+  console.log('Welcome email result:', emailSent)
+} catch (error) {
+  console.error('Welcome email delivery failed:', error)
+}
 
     return response.status(201).json({
       message: 'Registration successful',

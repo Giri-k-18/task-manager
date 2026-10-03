@@ -676,3 +676,26 @@
     transform: translateY(0);
   }
 }
+.email-warning-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 14px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.email-warning-checkbox input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.email-warning-checkbox span {
+  user-select: none;
+}
+
