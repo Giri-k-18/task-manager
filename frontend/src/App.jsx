@@ -355,7 +355,7 @@ function App() {
     return (
       <>
         <Toast toast={toast} onDismiss={() => setToast(null)} />
-        <div className="auth-shell">
+        <div className="auth-page auth-shell">
           <div className="ambient ambient-one" />
           <div className="ambient ambient-two" />
           <div className="auth-card reveal-card">

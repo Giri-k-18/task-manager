@@ -10,10 +10,11 @@
   width: min(440px, 100%);
   padding: 32px 28px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(12px);
   box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  color: #f8fafc;
 }
 
 .brand-row {
@@ -49,7 +50,7 @@
 .empty-state h3,
 .task-modal h3 {
   margin: 0;
-  color: #0f172a;
+  color: #f8fafc;
 }
 
 .auth-toggle {
@@ -114,10 +115,10 @@
   width: 100%;
   box-sizing: border-box;
   border-radius: 12px;
-  border: 1px solid #dbe2ec;
-  background: #f8fafc;
+  border: 1px solid #475569;
+  background: #111a2e;
   padding: 12px 14px;
-  color: #0f172a;
+  color: #f8fafc;
   font: inherit;
 }
 
@@ -1893,4 +1894,611 @@ body[data-theme="dark"] .status-badge.completed {
   .topbar .search-input {
     width: 100%;
   }
+}
+/* =========================================================
+   FINAL DARK MODE - LOGIN + DASHBOARD
+   Add this at the VERY BOTTOM of your CSS file
+   ========================================================= */
+
+:root {
+  --dark-bg: #070b14;
+  --dark-card: rgba(15, 23, 42, 0.88);
+  --dark-card-solid: #0f172a;
+  --dark-border: rgba(148, 163, 184, 0.18);
+  --dark-text: #f8fafc;
+  --dark-muted: #94a3b8;
+  --dark-input: #111a2e;
+}
+
+/* =========================
+   GLOBAL
+   ========================= */
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #070b14;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(37, 99, 235, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 90%,
+      rgba(6, 182, 212, 0.10),
+      transparent 30%
+    ),
+    #070b14;
+
+  color: var(--dark-text);
+}
+
+/* =========================================================
+   LOGIN PAGE
+   ========================================================= */
+
+.auth-shell {
+  position: relative;
+  min-height: 100vh;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(37, 99, 235, 0.20),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(6, 182, 212, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #020617 0%,
+      #07111f 50%,
+      #031923 100%
+    );
+}
+
+/* Login card */
+
+.auth-card {
+  position: relative;
+  z-index: 2;
+
+  width: min(440px, 100%);
+
+  padding: 32px 28px;
+
+  border-radius: 24px;
+
+  background: rgba(15, 23, 42, 0.90);
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.50),
+    0 0 50px rgba(37, 99, 235, 0.06);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  color: #f8fafc;
+}
+
+/* Login heading */
+
+.auth-card h1 {
+  color: #f8fafc !important;
+}
+
+.auth-card h2,
+.auth-card h3 {
+  color: #f8fafc;
+}
+
+.auth-card .eyebrow {
+  color: #94a3b8;
+}
+
+/* Login tabs */
+
+.auth-toggle {
+  background: #111a2e;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.mode {
+  background: transparent;
+  color: #94a3b8;
+}
+
+.mode:hover {
+  color: #f8fafc;
+  background: rgba(59, 130, 246, 0.10);
+}
+
+.mode.active {
+  background: #1e293b;
+  color: #f8fafc;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Login labels */
+
+.auth-form label,
+.task-form label {
+  color: #cbd5e1;
+}
+
+/* Login inputs */
+
+.auth-form input,
+.task-form input,
+.task-form textarea,
+.task-form select {
+  background: #111a2e !important;
+  color: #f8fafc !important;
+
+  border: 1px solid #334155 !important;
+}
+
+.auth-form input::placeholder,
+.task-form input::placeholder,
+.task-form textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.auth-form input:hover,
+.task-form input:hover,
+.task-form textarea:hover,
+.task-form select:hover {
+  border-color: #475569 !important;
+}
+
+.auth-form input:focus,
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus {
+  background: #111a2e !important;
+  color: #ffffff !important;
+
+  border-color: #38bdf8 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+/* Checkbox text */
+
+.email-warning-checkbox {
+  color: #94a3b8;
+}
+
+/* Error */
+
+.form-error {
+  color: #f87171;
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard-shell {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 28px 24px 52px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(37, 99, 235, 0.10),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(6, 182, 212, 0.08),
+      transparent 30%
+    ),
+    #070b14;
+
+  color: #f8fafc;
+}
+
+/* =========================================================
+   DASHBOARD HEADER
+   ========================================================= */
+
+.topbar {
+  position: relative;
+  z-index: 5;
+
+  max-width: 1160px;
+
+  margin: 0 auto 24px;
+
+  padding: 22px 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 32px;
+
+  background: rgba(15, 23, 42, 0.88);
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Dashboard title */
+
+.topbar h2 {
+  color: #f8fafc !important;
+}
+
+.topbar .eyebrow {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.topbar .search-box {
+  width: 340px;
+  flex-shrink: 0;
+}
+
+.topbar .search-input {
+  width: 100%;
+  height: 46px;
+
+  box-sizing: border-box;
+
+  padding: 0 16px;
+
+  background: #111a2e !important;
+
+  color: #f8fafc !important;
+
+  border: 1px solid #475569 !important;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.topbar .search-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.topbar .search-input:hover {
+  border-color: #64748b !important;
+}
+
+.topbar .search-input:focus {
+  background: #111a2e !important;
+
+  color: #ffffff !important;
+
+  border-color: #38bdf8 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(56, 189, 248, 0.12),
+    0 0 20px rgba(56, 189, 248, 0.08);
+}
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.stat-card {
+  background: rgba(15, 23, 42, 0.88) !important;
+
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.30) !important;
+
+  color: #f8fafc;
+}
+
+.stat-card span {
+  color: #94a3b8 !important;
+}
+
+.stat-card strong {
+  color: #f8fafc;
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.toolbar {
+  background: rgba(15, 23, 42, 0.88) !important;
+
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.28) !important;
+}
+
+/* Filter */
+
+.filter {
+  color: #94a3b8;
+
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.filter:hover {
+  color: #f8fafc;
+
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.filter.active {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #06b6d4
+    );
+}
+
+/* =========================================================
+   TASK CARDS
+   ========================================================= */
+
+.task-card {
+  background: rgba(15, 23, 42, 0.88) !important;
+
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.30) !important;
+
+  color: #f8fafc;
+}
+
+.task-card:hover {
+  border-color: rgba(56, 189, 248, 0.28) !important;
+
+  box-shadow:
+    0 28px 65px rgba(0, 0, 0, 0.42) !important;
+}
+
+.task-content h3 {
+  color: #f8fafc !important;
+}
+
+.task-description {
+  color: #cbd5e1 !important;
+}
+
+.task-date {
+  color: #94a3b8 !important;
+}
+
+/* =========================================================
+   TASK IMAGE
+   ========================================================= */
+
+.task-image {
+  background: #111827;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-badge.pending {
+  color: #fbbf24;
+
+  background: rgba(245, 158, 11, 0.12);
+
+  border-color: rgba(245, 158, 11, 0.20);
+}
+
+.status-badge.in_progress {
+  color: #60a5fa;
+
+  background: rgba(37, 99, 235, 0.13);
+
+  border-color: rgba(37, 99, 235, 0.20);
+}
+
+.status-badge.completed {
+  color: #4ade80;
+
+  background: rgba(34, 197, 94, 0.13);
+
+  border-color: rgba(34, 197, 94, 0.20);
+}
+
+/* =========================================================
+   DATE FILTER
+   ========================================================= */
+
+.date-filter {
+  background: #111a2e !important;
+
+  color: #f8fafc !important;
+
+  border-color: #334155 !important;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.task-modal {
+  background: #0f172a !important;
+
+  color: #f8fafc;
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.60);
+}
+
+.task-modal h3 {
+  color: #f8fafc !important;
+}
+
+.icon-close {
+  background: #1e293b;
+
+  color: #cbd5e1;
+}
+
+.icon-close:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.secondary-button {
+  background: #1e293b !important;
+
+  color: #e2e8f0 !important;
+
+  border: 1px solid #334155;
+}
+
+.secondary-button:hover {
+  background: #334155 !important;
+}
+
+.ghost-button {
+  background: transparent !important;
+
+  color: #cbd5e1 !important;
+
+  border-color: #475569 !important;
+}
+
+.ghost-button:hover {
+  background: rgba(59, 130, 246, 0.10) !important;
+
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+  background: rgba(15, 23, 42, 0.80) !important;
+
+  border-color: #334155 !important;
+
+  color: #f8fafc;
+}
+
+.empty-state h3 {
+  color: #f8fafc !important;
+}
+
+.empty-state p {
+  color: #94a3b8 !important;
+}
+
+/* =========================================================
+   THEME BUTTON
+   ========================================================= */
+
+.theme-toggle-icon {
+  background: #111a2e !important;
+
+  color: #f8fafc !important;
+
+  border-color: #475569 !important;
+}
+
+.theme-toggle-icon:hover {
+  background: #1e293b !important;
+
+  border-color: #38bdf8 !important;
+}
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.logout-button {
+  background: rgba(127, 29, 29, 0.18);
+
+  color: #f87171;
+
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.logout-button:hover {
+  background: rgba(239, 68, 68, 0.14);
+
+  border-color: #ef4444;
+
+  color: #fca5a5;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .topbar .search-box {
+    width: 100%;
+  }
+
+  .topbar .search-input {
+    width: 100%;
+  }
+
+  .auth-card {
+    padding: 26px 20px;
+  }
+
 }
