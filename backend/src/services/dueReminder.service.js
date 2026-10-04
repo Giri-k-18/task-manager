@@ -17,6 +17,9 @@ async function processDueDateReminders({
   }
 
   const dueBefore = new Date(now.getTime() + 24 * HOUR_IN_MS)
+  console.log('========== DUE REMINDER DEBUG ==========')
+console.log('Current time:', now.toISOString())
+console.log('Due before:', dueBefore.toISOString())
   const staleClaimBefore = new Date(now.getTime() - CLAIM_TIMEOUT_IN_MS)
   const tasks = await client.task.findMany({
     where: {
@@ -32,6 +35,18 @@ async function processDueDateReminders({
       owner: { select: { email: true } },
     },
   })
+  console.log('Tasks found for reminder:', tasks.length)
+
+for (const task of tasks) {
+  console.log({
+    id: task.id,
+    title: task.title,
+    dueDate: task.dueDate,
+    ownerEmail: task.owner.email,
+  })
+}
+
+console.log('========================================')
 
   const result = { checked: tasks.length, sent: 0, failed: 0, skipped: 0 }
 

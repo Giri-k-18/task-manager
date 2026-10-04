@@ -4,6 +4,10 @@ const { sendDueDateReminders } = require('../controllers/cron.controller')
 
 const router = express.Router()
 
-router.get('/due-reminders', requireCronAuth, sendDueDateReminders)
+router.get(
+  '/due-reminders',
+  requireCronAuth,
+  sendDueDateReminders
+)
 
 module.exports = router
