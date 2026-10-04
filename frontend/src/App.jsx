@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react'
 import { filterTasks } from './taskFilters.js'
 import './App.css'
 
+
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:4000'
 const AUTH_STORAGE_KEY = 'task-manager-auth'
 const THEME_STORAGE_KEY = 'task-manager-theme'
@@ -30,11 +31,15 @@ function formatDate(value) {
 
 function readStoredSession() {
   try {
-    const raw = localStorage.getItem(AUTH_STORAGE_KEY)
+    const raw = sessionStorage.getItem(AUTH_STORAGE_KEY)
+
     if (!raw) return null
 
     const parsed = JSON.parse(raw)
-    if (!parsed?.token || !parsed?.user) return null
+
+    if (!parsed?.token || !parsed?.user) {
+      return null
+    }
 
     return parsed
   } catch {
@@ -133,14 +138,18 @@ function App() {
   }, [tasks])
 
   const saveSession = (authData) => {
-    const nextSession = {
-      token: authData.token,
-      user: authData.user,
-    }
-
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(nextSession))
-    setSession(nextSession)
+  const nextSession = {
+    token: authData.token,
+    user: authData.user,
   }
+
+  sessionStorage.setItem(
+    AUTH_STORAGE_KEY,
+    JSON.stringify(nextSession),
+  )
+
+  setSession(nextSession)
+}
 
   const handleAuthSubmit = async (event) => {
     event.preventDefault()
@@ -172,12 +181,12 @@ function App() {
     }
   }
 
-  const logout = () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY)
-    setSession(null)
-    setTasks([])
-    setIsMobileMenuOpen(false)
-  }
+ const logout = () => {
+  sessionStorage.removeItem(AUTH_STORAGE_KEY)
+  setSession(null)
+  setTasks([])
+  setIsMobileMenuOpen(false)
+}
 
   const openCreateModal = () => {
     setEditingTask(null)
@@ -429,46 +438,60 @@ function App() {
         <div className="ambient ambient-one" />
         <div className="ambient ambient-two" />
       <header className="topbar reveal-card">
-        <div className="brand-row">
-          <div className="brand-mark">T</div>
-          <div>
-            <p className="eyebrow">Task Manager</p>
-            <h2>Dashboard</h2>
-          </div>
-        </div>
+  <div className="brand-row">
+    <div className="brand-mark">T</div>
 
-        <button
-          type="button"
-          className="mobile-menu-toggle"
-          aria-controls="dashboard-mobile-menu"
-          aria-expanded={isMobileMenuOpen}
-          onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
-        >
-          {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          <span>{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
-        </button>
+    <div>
+      <p className="eyebrow">Task Manager</p>
+      <h2>Dashboard</h2>
+    </div>
+  </div>
 
-        <div
-          id="dashboard-mobile-menu"
-          className={isMobileMenuOpen ? 'topbar-actions open' : 'topbar-actions'}
-        >
-          <input
-            type="search"
-            className="search-input"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Search tasks"
-            aria-label="Search tasks"
-          />
+  <button
+    type="button"
+    className="mobile-menu-toggle"
+    aria-controls="dashboard-mobile-menu"
+    aria-expanded={isMobileMenuOpen}
+    onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+  >
+    {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+    <span>{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
+  </button>
 
-          <button type="button" className="secondary-button" onClick={() => setIsDark((value) => !value)}>
-            {isDark ? 'Light mode' : 'Dark mode'}
-          </button>
-          <button type="button" className="ghost-button" onClick={logout}>
-            Logout
-          </button>
-        </div>
-      </header>
+  <div
+  id="dashboard-mobile-menu"
+  className={isMobileMenuOpen ? 'topbar-actions open' : 'topbar-actions'}
+>
+  <div className="header-search">
+    <input
+      type="search"
+      className="search-input"
+      value={searchTerm}
+      onChange={(event) => setSearchTerm(event.target.value)}
+      placeholder="Search tasks"
+      aria-label="Search tasks"
+    />
+  </div>
+
+  <button
+    type="button"
+    className="theme-toggle-icon"
+    onClick={() => setIsDark((value) => !value)}
+    title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+  >
+    {isDark ? '☀️' : '🌙'}
+  </button>
+
+  <button
+    type="button"
+    className="ghost-button header-logout"
+    onClick={logout}
+  >
+    Logout
+  </button>
+</div>
+</header>
 
       <main className="content-panel">
         <section className="stats-grid">
