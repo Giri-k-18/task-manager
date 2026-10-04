@@ -1,35 +1,64 @@
-const { Resend } = require('resend')
+const nodemailer = require('nodemailer')
 
 const {
   createDueDateReminderEmail,
   createWelcomeEmail,
 } = require('./emailTemplates')
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 function isEmailConfigured() {
-  return Boolean(process.env.RESEND_API_KEY)
+  const requiredValues = [
+    process.env.SMTP_HOST,
+    process.env.SMTP_PORT,
+    process.env.SMTP_USER,
+    process.env.SMTP_PASSWORD,
+    process.env.EMAIL_FROM,
+  ]
+
+  const port = Number(process.env.SMTP_PORT)
+
+  return (
+    requiredValues.every((value) => Boolean(value)) &&
+    Number.isInteger(port) &&
+    port > 0 &&
+    port < 65536
+  )
+}
+
+function createEmailTransport() {
+  const port = Number(process.env.SMTP_PORT)
+
+  const secure = process.env.SMTP_SECURE
+    ? process.env.SMTP_SECURE === 'true'
+    : port === 465
+
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port,
+    secure,
+
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 10_000,
+  })
 }
 
 async function sendEmail(to, message) {
   if (!isEmailConfigured()) {
-    console.warn('Resend is not configured')
     return false
   }
 
-  const { data, error } = await resend.emails.send({
-    from: process.env.EMAIL_FROM || 'Task Manager <onboarding@resend.dev>',
-    to: [to],
-    subject: message.subject,
-    html: message.html,
+  const transport = createEmailTransport()
+
+  await transport.sendMail({
+    from: process.env.EMAIL_FROM,
+    to,
+    ...message,
   })
-
-  if (error) {
-    console.error('Resend email error:', error)
-    return false
-  }
-
-  console.log('Email sent successfully:', data?.id)
 
   return true
 }
