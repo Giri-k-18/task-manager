@@ -1,11 +1,13 @@
 const cors = require('cors')
 const express = require('express')
+
 const prisma = require('./config/prisma')
 
 const authRoutes = require('./routes/auth.routes')
 const taskRoutes = require('./routes/task.routes')
 const uploadRoutes = require('./routes/upload.routes')
 const cronRoutes = require('./routes/cron.routes')
+
 const errorHandler = require('./middleware/errorHandler')
 
 const app = express()
