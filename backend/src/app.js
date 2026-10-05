@@ -26,6 +26,7 @@ const defaultOrigins = [
   'http://127.0.0.1:5174',
   'http://localhost:5173',
   'http://localhost:5174',
+  'https://task-manager-roan-seven-63.vercel.app',
 ]
 
 const allowedOrigins = new Set([
