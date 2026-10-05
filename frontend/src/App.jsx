@@ -28,6 +28,28 @@ function formatDate(value) {
     timeZone: 'UTC',
   }).format(date)
 }
+function getUserDisplayName(user) {
+  if (!user) return 'User'
+
+  if (user.name) {
+    return user.name
+  }
+
+  if (user.email) {
+    const emailName = user.email.split('@')[0]
+
+    return emailName
+      .replace(/[0-9]+/g, '')
+      .replace(/[._-]+/g, ' ')
+      .trim()
+      .split(' ')
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ') || 'User'
+  }
+
+  return 'User'
+}
 
 function readStoredSession() {
   try {
@@ -71,7 +93,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [dueDateFilter, setDueDateFilter] = useState('')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isDark, setIsDark] = useState(() => localStorage.getItem(THEME_STORAGE_KEY) === 'dark')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
   const [taskForm, setTaskForm] = useState(EMPTY_FORM)
@@ -89,10 +110,7 @@ function App() {
     return () => window.clearTimeout(timeoutId)
   }, [toast])
 
-  useEffect(() => {
-    document.body.dataset.theme = isDark ? 'dark' : 'light'
-    localStorage.setItem(THEME_STORAGE_KEY, isDark ? 'dark' : 'light')
-  }, [isDark])
+
 
   useEffect(() => {
     if (!session?.token) return
@@ -360,7 +378,9 @@ function App() {
           <div className="ambient ambient-two" />
           <div className="auth-card reveal-card">
             <div className="brand-row">
-              <div className="brand-mark">T</div>
+              <div className="brand-mark">
+  {getUserDisplayName(session.user).charAt(0).toUpperCase()}
+</div>
               <div>
                 <p className="eyebrow">Task Manager</p>
                 <h1>Welcome back</h1>
@@ -439,11 +459,13 @@ function App() {
         <div className="ambient ambient-two" />
       <header className="topbar reveal-card">
   <div className="brand-row">
-    <div className="brand-mark">T</div>
+   <div className="brand-mark">
+  {getUserDisplayName(session.user).charAt(0).toUpperCase()}
+</div>
 
     <div>
       <p className="eyebrow">Task Manager</p>
-      <h2>Dashboard</h2>
+      <h2>Welcome {getUserDisplayName(session.user)}</h2>
     </div>
   </div>
 
@@ -473,15 +495,7 @@ function App() {
     />
   </div>
 
-  <button
-    type="button"
-    className="theme-toggle-icon"
-    onClick={() => setIsDark((value) => !value)}
-    title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-    aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-  >
-    {isDark ? '☀️' : '🌙'}
-  </button>
+  
 
   <button
     type="button"

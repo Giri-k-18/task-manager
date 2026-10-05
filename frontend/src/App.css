@@ -2502,3 +2502,1670 @@ body {
   }
 
 }
+/* =========================================================
+   BLACK & WHITE MONOCHROME THEME
+   ========================================================= */
+
+:root {
+  --bg-main: #000000;
+  --bg-card: #111111;
+  --bg-card-solid: #111111;
+
+  --text-main: #ffffff;
+  --text-secondary: #a3a3a3;
+
+  --border-soft: #2a2a2a;
+
+  --accent: #ffffff;
+  --accent-2: #ffffff;
+
+  --shadow-soft: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- BODY ---------- */
+
+html,
+body {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* ---------- MAIN SHELL ---------- */
+
+.dashboard-shell,
+.auth-shell {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* ---------- REMOVE COLORED AMBIENT LIGHTS ---------- */
+
+.ambient-one,
+.ambient-two {
+  background: #ffffff !important;
+  opacity: 0.035 !important;
+}
+
+/* ---------- TOP BAR ---------- */
+
+.topbar {
+  background: #111111 !important;
+  border: 1px solid #2a2a2a !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ---------- BRAND ---------- */
+
+.brand-mark {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+/* ---------- TEXT ---------- */
+
+.eyebrow,
+.stat-card span,
+.task-date,
+.task-description,
+.empty-state p,
+.date-filter-label {
+  color: #a3a3a3 !important;
+}
+
+.brand-row h1,
+.brand-row h2,
+.auth-card h1,
+.task-card h3,
+.empty-state h3,
+.task-modal h3 {
+  color: #ffffff !important;
+}
+
+/* ---------- STAT CARDS ---------- */
+
+.stat-card {
+  background: #111111 !important;
+  border: 1px solid #2a2a2a !important;
+  box-shadow: none !important;
+}
+
+.stat-card strong,
+.stat-card.muted strong,
+.stat-card.accent strong,
+.stat-card.success strong {
+  color: #ffffff !important;
+}
+
+/* ---------- SEARCH / INPUTS ---------- */
+
+.search-input,
+.auth-form input,
+.task-form input,
+.task-form textarea,
+.task-form select,
+.date-filter,
+.task-actions select {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+.search-input::placeholder,
+.auth-form input::placeholder,
+.task-form input::placeholder,
+.task-form textarea::placeholder {
+  color: #666666 !important;
+}
+
+.search-input:focus,
+.auth-form input:focus,
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus,
+.date-filter:focus {
+  outline: none !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ---------- FILTER BUTTONS ---------- */
+
+.filter {
+  background: #181818 !important;
+  color: #bdbdbd !important;
+  border: 1px solid #2a2a2a !important;
+}
+
+.filter.active {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+/* ---------- MAIN BUTTON ---------- */
+
+.primary-button {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: none !important;
+}
+
+.primary-button:hover {
+  background: #e5e5e5 !important;
+  color: #000000 !important;
+}
+
+/* ---------- SECONDARY BUTTON ---------- */
+
+.secondary-button {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff !important;
+}
+
+/* ---------- GHOST / LOGOUT BUTTON ---------- */
+
+.ghost-button {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+.ghost-button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* ---------- TASK CARDS ---------- */
+
+.task-card {
+  background: #111111 !important;
+  border: 1px solid #2a2a2a !important;
+  box-shadow: none !important;
+}
+
+.task-card:hover,
+.stat-card:hover,
+.topbar:hover,
+.auth-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ---------- STATUS BADGES ---------- */
+
+.status-badge.pending,
+.status-badge.in_progress,
+.status-badge.completed {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+/* ---------- TASK IMAGE BACKGROUND ---------- */
+
+.task-image {
+  background: #0a0a0a !important;
+}
+
+/* ---------- EMPTY STATE ---------- */
+
+.empty-state {
+  background: #111111 !important;
+  border: 1px dashed #333333 !important;
+  color: #ffffff !important;
+}
+
+/* ---------- MODAL ---------- */
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.task-modal {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #2a2a2a !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* ---------- CLOSE BUTTON ---------- */
+
+.icon-close {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+/* ---------- MOBILE MENU ---------- */
+
+.mobile-menu-toggle {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+/* ---------- THEME TOGGLE ---------- */
+
+.theme-toggle-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #333333 !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+  cursor: pointer;
+}
+
+.theme-toggle-icon:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* ---------- FORM ERROR ---------- */
+
+.form-error {
+  color: #ffffff !important;
+}
+
+/* ---------- EMAIL WARNING ---------- */
+
+.email-warning-checkbox {
+  color: #999999 !important;
+}
+
+.email-warning-checkbox input {
+  accent-color: #ffffff;
+}
+
+/* ---------- TOAST ---------- */
+
+.toast {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+.toast.error {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #555555 !important;
+}
+
+/* ---------- SELECT OPTIONS ---------- */
+
+select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* ---------- SCROLLBAR ---------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}/* ---------- REMOVE ALL AMBIENT CIRCLES / GLOW ---------- */
+
+.ambient-one,
+.ambient-two,
+.background-orb,
+.bg-orb,
+.glow-orb {
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+}
+
+/* Remove pseudo-element decorative circles */
+.auth-shell::before,
+.auth-shell::after,
+.dashboard-shell::before,
+.dashboard-shell::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Completely clean monochrome background */
+.auth-shell,
+.dashboard-shell {
+  background: #000000 !important;
+  background-image: none !important;
+}/* =========================================================
+   PROFESSIONAL BLACK & WHITE DASHBOARD
+   ========================================================= */
+
+:root {
+  --bw-black: #000000;
+  --bw-dark: #0a0a0a;
+  --bw-card: #111111;
+  --bw-white: #ffffff;
+  --bw-text: #f5f5f5;
+  --bw-muted: #a3a3a3;
+  --bw-border: #2a2a2a;
+}
+
+/* ---------- PAGE ---------- */
+
+body {
+  background: var(--bw-black) !important;
+  color: var(--bw-text);
+}
+
+/* Remove decorative corner circles */
+.ambient,
+.ambient-one,
+.ambient-two {
+  display: none !important;
+}
+
+/* ---------- DASHBOARD ---------- */
+
+.dashboard-shell {
+  min-height: 100vh;
+  padding: 32px 28px 60px;
+  background: #000000;
+}
+
+/* ---------- HEADER ---------- */
+
+.topbar {
+  max-width: 1180px;
+  min-height: 82px;
+  margin: 0 auto 28px;
+
+  padding: 18px 22px;
+
+  background: #0d0d0d !important;
+  border: 1px solid #292929 !important;
+  border-radius: 18px;
+
+  box-shadow: none !important;
+
+  backdrop-filter: none !important;
+}
+
+.topbar:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Brand */
+
+.brand-row {
+  gap: 14px;
+  margin-bottom: 0;
+}
+
+.brand-mark {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 12px;
+
+  background: #ffffff !important;
+  color: #000000 !important;
+
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.eyebrow {
+  color: #8f8f8f !important;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.topbar h2 {
+  color: #ffffff !important;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- SEARCH ---------- */
+
+.header-search {
+  width: 330px;
+}
+
+.search-input {
+  height: 44px;
+
+  background: #111111 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #333333 !important;
+  border-radius: 10px;
+
+  box-shadow: none !important;
+}
+
+.search-input::placeholder {
+  color: #777777 !important;
+}
+
+.search-input:hover {
+  border-color: #555555 !important;
+}
+
+.search-input:focus {
+  border-color: #ffffff !important;
+  outline: none !important;
+
+  box-shadow: 0 0 0 2px #222222 !important;
+}
+
+/* ---------- HEADER BUTTONS ---------- */
+
+.theme-toggle-icon {
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid #333333 !important;
+  border-radius: 10px;
+
+  background: #111111 !important;
+  color: #ffffff !important;
+
+  box-shadow: none !important;
+}
+
+.ghost-button {
+  min-height: 44px;
+
+  background: #ffffff !important;
+  color: #000000 !important;
+
+  border: 1px solid #ffffff !important;
+  border-radius: 10px;
+
+  padding: 0 18px;
+}
+
+.ghost-button:hover {
+  background: #dddddd !important;
+}
+
+/* ---------- MAIN ---------- */
+
+.content-panel {
+  max-width: 1180px;
+  margin: 0 auto;
+
+  gap: 24px;
+}
+
+/* ---------- STATISTICS ---------- */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.stat-card {
+  min-height: 125px;
+
+  padding: 22px;
+
+  background: #0d0d0d !important;
+
+  border: 1px solid #292929 !important;
+  border-radius: 16px;
+
+  box-shadow: none !important;
+
+  backdrop-filter: none !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px) !important;
+
+  border-color: #444444 !important;
+
+  box-shadow: none !important;
+}
+
+.stat-card span {
+  color: #8c8c8c !important;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+}
+
+.stat-card strong {
+  display: block;
+
+  margin-top: 16px;
+
+  color: #ffffff !important;
+
+  font-size: 34px;
+  font-weight: 700;
+}
+
+/* Remove colored statistics */
+
+.stat-card.muted strong,
+.stat-card.accent strong,
+.stat-card.success strong {
+  color: #ffffff !important;
+}
+
+/* ---------- TOOLBAR ---------- */
+
+.toolbar {
+  padding: 14px;
+
+  background: #0d0d0d;
+
+  border: 1px solid #292929;
+  border-radius: 14px;
+
+  gap: 14px;
+}
+
+.filter-group {
+  gap: 6px;
+}
+
+.filter {
+  padding: 9px 15px;
+
+  background: #151515 !important;
+  color: #a5a5a5 !important;
+
+  border: 1px solid #292929 !important;
+  border-radius: 9px;
+
+  font-size: 13px;
+}
+
+.filter:hover {
+  background: #202020 !important;
+  color: #ffffff !important;
+}
+
+.filter.active {
+  background: #ffffff !important;
+  color: #000000 !important;
+
+  border-color: #ffffff !important;
+
+  box-shadow: none !important;
+}
+
+/* ---------- DATE FILTER ---------- */
+
+.date-filter-label {
+  color: #8c8c8c !important;
+}
+
+.date-filter {
+  min-height: 42px;
+
+  background: #111111 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #333333 !important;
+  border-radius: 9px;
+}
+
+/* ---------- NEW TASK ---------- */
+
+.primary-button {
+  background: #ffffff !important;
+  color: #000000 !important;
+
+  border: 1px solid #ffffff !important;
+  border-radius: 10px;
+
+  font-weight: 700;
+
+  box-shadow: none !important;
+}
+
+.primary-button:hover {
+  background: #dddddd !important;
+}
+
+/* ---------- TASK LIST ---------- */
+
+.task-list {
+  gap: 14px;
+}
+
+/* ---------- TASK CARD ---------- */
+
+.task-card {
+  background: #0d0d0d !important;
+
+  border: 1px solid #292929 !important;
+  border-radius: 16px;
+
+  box-shadow: none !important;
+
+  backdrop-filter: none !important;
+}
+
+.task-card:hover {
+  transform: translateY(-2px) !important;
+
+  border-color: #444444 !important;
+
+  box-shadow: none !important;
+}
+
+.task-content {
+  padding: 22px;
+}
+
+.task-header h3 {
+  color: #ffffff !important;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.task-date {
+  color: #777777 !important;
+}
+
+.task-description {
+  color: #a3a3a3 !important;
+}
+
+/* ---------- STATUS ---------- */
+
+.status-badge.pending {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+
+  border: 1px solid #444444;
+}
+
+.status-badge.in_progress {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+
+  border: 1px solid #444444;
+}
+
+.status-badge.completed {
+  background: #ffffff !important;
+  color: #000000 !important;
+
+  border: 1px solid #ffffff;
+}
+
+/* ---------- EMPTY STATE ---------- */
+
+.empty-state {
+  padding: 45px 28px;
+
+  background: #0d0d0d !important;
+
+  border: 1px dashed #333333 !important;
+  border-radius: 16px;
+
+  box-shadow: none !important;
+}
+
+.empty-state h3 {
+  color: #ffffff !important;
+}
+
+.empty-state p {
+  color: #777777 !important;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .header-search {
+    width: 280px;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-shell {
+    padding: 18px 14px 40px;
+  }
+
+  .topbar {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-search {
+    width: 100%;
+  }
+
+  .toolbar {
+    padding: 12px;
+  }
+}/* =========================================================
+   FINAL PROFESSIONAL BLACK & WHITE UI
+   ========================================================= */
+
+/* ---------- GLOBAL ---------- */
+
+:root {
+  --bw-bg: #111111;
+  --bw-bg-soft: #151515;
+  --bw-card: #1a1a1a;
+  --bw-card-hover: #1e1e1e;
+  --bw-input: #0d0d0d;
+
+  --bw-border: #2d2d2d;
+  --bw-border-light: #383838;
+
+  --bw-white: #ffffff;
+  --bw-text: #f5f5f5;
+  --bw-text-soft: #b5b5b5;
+  --bw-text-muted: #858585;
+
+  --bw-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ---------- BODY ---------- */
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background: var(--bw-bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bw-bg) !important;
+  color: var(--bw-text);
+}
+
+
+/* =========================================================
+   REMOVE ALL DECORATIVE CIRCLES / AMBIENT EFFECTS
+   ========================================================= */
+
+.ambient,
+.ambient-one,
+.ambient-two {
+  display: none !important;
+}
+
+.dashboard-shell::before,
+.dashboard-shell::after,
+.auth-shell::before,
+.auth-shell::after {
+  display: none !important;
+  content: none !important;
+}
+
+.stat-card::before,
+.stat-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+
+/* =========================================================
+   DASHBOARD BACKGROUND
+   ========================================================= */
+
+.dashboard-shell {
+  min-height: 100vh;
+  padding: 32px 24px 60px !important;
+
+  background: #111111 !important;
+
+  color: var(--bw-text);
+
+  overflow: visible !important;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.content-panel {
+  max-width: 1180px !important;
+  margin: 28px auto 60px !important;
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+.topbar {
+  max-width: 1180px !important;
+  margin: 0 auto 28px !important;
+
+  padding: 22px 26px !important;
+
+  background: #181818 !important;
+
+  border: 1px solid #303030 !important;
+  border-radius: 16px !important;
+
+  box-shadow: var(--bw-shadow) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+.topbar:hover {
+  transform: translateY(-2px) !important;
+  background: #1b1b1b !important;
+  border-color: #404040 !important;
+
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4) !important;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand-mark {
+  width: 48px !important;
+  height: 48px !important;
+
+  border-radius: 12px !important;
+
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  box-shadow: none !important;
+
+  font-weight: 800;
+}
+
+.brand-mark:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.eyebrow {
+  color: #888888 !important;
+}
+
+.brand-row h1,
+.brand-row h2,
+.topbar h1,
+.topbar h2 {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   SEARCH INPUT
+   ========================================================= */
+
+.search-input {
+  min-width: 240px;
+
+  background: #101010 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #343434 !important;
+  border-radius: 10px !important;
+
+  box-shadow: none !important;
+}
+
+.search-input::placeholder {
+  color: #777777 !important;
+}
+
+.search-input:focus {
+  outline: none !important;
+
+  border-color: #777777 !important;
+
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06) !important;
+}
+
+
+/* =========================================================
+   TOPBAR BUTTONS
+   ========================================================= */
+
+.topbar-actions button,
+.mobile-menu-toggle {
+  background: #171717 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #363636 !important;
+  border-radius: 10px !important;
+
+  box-shadow: none !important;
+}
+
+.topbar-actions button:hover,
+.mobile-menu-toggle:hover {
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  border-color: #ffffff !important;
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+   ========================================================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.stat-card {
+  position: relative;
+
+  min-height: 125px;
+
+  padding: 24px !important;
+
+  background: #1a1a1a !important;
+
+  border: 1px solid #303030 !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px) !important;
+
+  background: #1e1e1e !important;
+
+  border-color: #454545 !important;
+
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+.stat-card span {
+  color: #888888 !important;
+
+  font-size: 11px !important;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+.stat-card strong {
+  color: #ffffff !important;
+
+  font-size: 40px !important;
+  font-weight: 700;
+
+  margin-top: 12px;
+}
+
+
+/* Remove old colored statistics */
+
+.stat-card.muted strong,
+.stat-card.accent strong,
+.stat-card.success strong {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.toolbar {
+  padding: 16px 18px;
+
+  background: #181818 !important;
+
+  border: 1px solid #303030 !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   FILTER BUTTONS
+   ========================================================= */
+
+.filter-group {
+  gap: 8px;
+}
+
+.filter {
+  padding: 10px 16px !important;
+
+  background: #202020 !important;
+  color: #a8a8a8 !important;
+
+  border: 1px solid #333333 !important;
+  border-radius: 9px !important;
+
+  font-weight: 600;
+
+  box-shadow: none !important;
+}
+
+.filter:hover {
+  background: #292929 !important;
+  color: #ffffff !important;
+  border-color: #4a4a4a !important;
+}
+
+.filter.active {
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  border-color: #ffffff !important;
+
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   DATE FILTER
+   ========================================================= */
+
+.date-filter-label {
+  color: #999999 !important;
+}
+
+.date-filter {
+  background: #0e0e0e !important;
+  color: #ffffff !important;
+
+  border: 1px solid #363636 !important;
+  border-radius: 9px !important;
+}
+
+.date-filter:focus {
+  outline: none !important;
+  border-color: #777777 !important;
+}
+
+
+/* =========================================================
+   NEW TASK BUTTON
+   ========================================================= */
+
+.primary-button {
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  border: 1px solid #ffffff !important;
+  border-radius: 9px !important;
+
+  box-shadow: none !important;
+
+  font-weight: 700;
+}
+
+.primary-button:hover {
+  background: #dddddd !important;
+  color: #000000 !important;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.secondary-button {
+  background: #222222 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #3b3b3b !important;
+  border-radius: 9px !important;
+}
+
+.secondary-button:hover {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+
+/* =========================================================
+   GHOST BUTTON
+   ========================================================= */
+
+.ghost-button {
+  background: transparent !important;
+  color: #dddddd !important;
+
+  border: 1px solid #3a3a3a !important;
+  border-radius: 9px !important;
+}
+
+.ghost-button:hover {
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  border-color: #ffffff !important;
+}
+
+.ghost-button.danger {
+  color: #d0d0d0 !important;
+  border-color: #444444 !important;
+}
+
+.ghost-button.danger:hover {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+
+/* =========================================================
+   TASK LIST
+   ========================================================= */
+
+.task-list {
+  display: grid;
+  gap: 16px;
+}
+
+
+/* =========================================================
+   TASK CARD
+   ========================================================= */
+
+.task-card {
+  display: flex;
+
+  background: #191919 !important;
+
+  border: 1px solid #303030 !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease !important;
+}
+
+.task-card:hover {
+  transform: translateY(-3px) !important;
+
+  background: #1d1d1d !important;
+
+  border-color: #444444 !important;
+
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4) !important;
+}
+
+
+/* =========================================================
+   TASK CONTENT
+   ========================================================= */
+
+.task-content {
+  background: transparent !important;
+}
+
+.task-header h3,
+.task-card h3 {
+  color: #ffffff !important;
+}
+
+.task-date {
+  color: #858585 !important;
+}
+
+.task-description {
+  color: #a5a5a5 !important;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge {
+  border: 1px solid #3a3a3a !important;
+}
+
+.status-badge.pending {
+  background: #252525 !important;
+  color: #ffffff !important;
+}
+
+.status-badge.in_progress {
+  background: #303030 !important;
+  color: #ffffff !important;
+}
+
+.status-badge.completed {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+
+/* =========================================================
+   TASK SELECT
+   ========================================================= */
+
+.task-actions select {
+  background: #101010 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #363636 !important;
+  border-radius: 9px !important;
+}
+
+.task-actions select:focus {
+  outline: none !important;
+  border-color: #777777 !important;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+  background: #181818 !important;
+
+  border: 1px dashed #3b3b3b !important;
+  border-radius: 14px !important;
+
+  box-shadow: none !important;
+
+  backdrop-filter: none !important;
+}
+
+.empty-state h3 {
+  color: #ffffff !important;
+}
+
+.empty-state p {
+  color: #858585 !important;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.78) !important;
+  backdrop-filter: blur(4px);
+}
+
+.task-modal {
+  background: #181818 !important;
+
+  color: #ffffff !important;
+
+  border: 1px solid #383838 !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.65) !important;
+
+  backdrop-filter: none !important;
+}
+
+.task-modal h3 {
+  color: #ffffff !important;
+}
+
+.icon-close {
+  background: #222222 !important;
+  color: #ffffff !important;
+
+  border: 1px solid #3b3b3b !important;
+}
+
+.icon-close:hover {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+   ========================================================= */
+
+.auth-form input,
+.task-form input,
+.task-form textarea,
+.task-form select {
+  background: #0e0e0e !important;
+  color: #ffffff !important;
+
+  border: 1px solid #353535 !important;
+  border-radius: 9px !important;
+}
+
+.auth-form input::placeholder,
+.task-form input::placeholder,
+.task-form textarea::placeholder {
+  color: #666666 !important;
+}
+
+.auth-form input:focus,
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus {
+  outline: none !important;
+
+  border-color: #777777 !important;
+
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05) !important;
+}
+
+
+/* =========================================================
+   AUTH PAGE
+   ========================================================= */
+
+.auth-shell {
+  min-height: 100vh;
+
+  background: #111111 !important;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  overflow: visible !important;
+}
+
+
+/* =========================================================
+   AUTH CARD
+   ========================================================= */
+
+.auth-card {
+  width: min(440px, 100%);
+
+  padding: 32px 28px !important;
+
+  background: #191919 !important;
+
+  border: 1px solid #333333 !important;
+  border-radius: 16px !important;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.auth-card:hover {
+  transform: none !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45) !important;
+}
+
+.auth-card h1 {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   LOGIN / REGISTER TOGGLE
+   ========================================================= */
+
+.auth-toggle {
+  background: #0f0f0f !important;
+
+  border: 1px solid #303030 !important;
+  border-radius: 10px !important;
+}
+
+.mode {
+  color: #888888 !important;
+}
+
+.mode.active {
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   FORM LABELS
+   ========================================================= */
+
+.auth-form label,
+.task-form label {
+  color: #dddddd !important;
+}
+
+
+/* =========================================================
+   EMAIL WARNING
+   ========================================================= */
+
+.email-warning-checkbox {
+  color: #888888 !important;
+}
+
+.email-warning-checkbox input {
+  accent-color: #ffffff;
+}
+
+
+/* =========================================================
+   FORM ERROR
+   ========================================================= */
+
+.form-error {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+  background: #1d1d1d !important;
+
+  color: #ffffff !important;
+
+  border: 1px solid #3b3b3b !important;
+  border-radius: 10px !important;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45) !important;
+}
+
+.toast.error {
+  background: #1d1d1d !important;
+  color: #ffffff !important;
+
+  border-color: #555555 !important;
+}
+
+.toast button {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+   ========================================================= */
+
+.image-preview {
+  border: 1px solid #3a3a3a !important;
+  border-radius: 10px !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  .dashboard-shell {
+    padding: 20px 14px 40px !important;
+  }
+
+  .content-panel {
+    margin-top: 20px !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .stat-card {
+    min-height: 100px;
+    padding: 18px !important;
+  }
+
+  .stat-card strong {
+    font-size: 32px !important;
+  }
+
+  .topbar {
+    padding: 18px !important;
+    border-radius: 14px !important;
+  }
+
+  .toolbar {
+    padding: 14px !important;
+  }
+
+  .task-card {
+    border-radius: 12px !important;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card {
+    padding: 26px 20px !important;
+  }
+}
+/* FINAL THEME TOGGLE */
+
+.theme-toggle-icon {
+  width: 46px !important;
+  height: 46px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 !important;
+
+  border: 1px solid var(--border-soft) !important;
+  border-radius: 12px !important;
+
+  background: var(--bg-card-solid) !important;
+  color: var(--text-main) !important;
+
+  font-size: 18px !important;
+  line-height: 1 !important;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.theme-toggle-icon:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: var(--text-main) !important;
+}
+
+.theme-toggle-icon:active {
+  transform: scale(0.92);
+}
+
+body[data-theme="dark"] .theme-toggle-icon {
+  background: #171717 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+body[data-theme="light"] .theme-toggle-icon {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #d4d4d4 !important;
+}

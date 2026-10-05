@@ -78,11 +78,11 @@ test('registration validates input, hashes the password, and returns a token', a
 
   const response = await callApi('/api/auth/register', {
     method: 'POST',
-    body: { email: 'Person@Example.com', password: 'correct horse battery' },
+    body: { email: 'Person@gmail.com', password: 'correct horse battery' },
   })
 
   assert.equal(response.status, 201)
-  assert.equal(createdUser.email, 'person@example.com')
+  assert.equal(createdUser.email, 'person@gmail.com')
   assert.notEqual(createdUser.passwordHash, 'correct horse battery')
   assert.equal(jwt.verify(response.body.token, testSecret).sub, testUserId)
 })

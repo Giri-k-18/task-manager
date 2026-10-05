@@ -5,7 +5,7 @@ const { upsertDemoUser } = require('./demoUser.service')
 
 test('upserts a normalized demo account with a bcrypt password hash', async () => {
   let query
-  const user = { id: 'demo-user-id', email: 'demo@example.com' }
+  const user = { id: 'demo-user-id', email: 'demo@gmail.com' }
   const client = {
     user: {
       upsert: async (args) => {
@@ -17,13 +17,13 @@ test('upserts a normalized demo account with a bcrypt password hash', async () =
 
   const result = await upsertDemoUser({
     client,
-    email: 'Demo@Example.com',
+    email: 'Demo@gmail.com',
     password: 'unique-demo-password',
   })
 
   assert.deepEqual(result, user)
-  assert.equal(query.where.email, 'demo@example.com')
-  assert.equal(query.create.email, 'demo@example.com')
+  assert.equal(query.where.email, 'demo@gmail.com')
+  assert.equal(query.create.email, 'demo@gmail.com')
   assert.notEqual(query.create.passwordHash, 'unique-demo-password')
   assert.equal(await bcrypt.compare('unique-demo-password', query.create.passwordHash), true)
   assert.equal(query.update.passwordHash, query.create.passwordHash)
