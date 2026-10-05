@@ -3,10 +3,9 @@ import { Menu, X } from 'lucide-react'
 import { filterTasks } from './taskFilters.js'
 import './App.css'
 
-
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:4000'
 const AUTH_STORAGE_KEY = 'task-manager-auth'
-const THEME_STORAGE_KEY = 'task-manager-theme'
+
 const EMPTY_FORM = {
   title: '',
   description: '',
@@ -15,7 +14,17 @@ const EMPTY_FORM = {
   imageUrl: '',
 }
 
-const statusOptions = ['all', 'pending', 'in_progress', 'completed']
+// ✅ Single source of truth for task statuses
+const TASK_STATUSES = [
+  { value: 'pending', label: 'Pending' },
+  { value: 'in_progress', label: 'In progress' },
+  { value: 'completed', label: 'Completed' },
+]
+
+const statusOptions = ['all', ...TASK_STATUSES.map((s) => s.value)]
+
+const getStatusLabel = (value) =>
+  TASK_STATUSES.find((s) => s.value === value)?.label || value
 
 function formatDate(value) {
   if (!value) return 'No due date'
@@ -28,6 +37,7 @@ function formatDate(value) {
     timeZone: 'UTC',
   }).format(date)
 }
+
 function getUserDisplayName(user) {
   if (!user) return 'User'
 
@@ -38,14 +48,16 @@ function getUserDisplayName(user) {
   if (user.email) {
     const emailName = user.email.split('@')[0]
 
-    return emailName
-      .replace(/[0-9]+/g, '')
-      .replace(/[._-]+/g, ' ')
-      .trim()
-      .split(' ')
-      .filter(Boolean)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ') || 'User'
+    return (
+      emailName
+        .replace(/[0-9]+/g, '')
+        .replace(/[._-]+/g, ' ')
+        .trim()
+        .split(' ')
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ') || 'User'
+    )
   }
 
   return 'User'
@@ -110,8 +122,6 @@ function App() {
     return () => window.clearTimeout(timeoutId)
   }, [toast])
 
-
-
   useEffect(() => {
     if (!session?.token) return
 
@@ -156,18 +166,15 @@ function App() {
   }, [tasks])
 
   const saveSession = (authData) => {
-  const nextSession = {
-    token: authData.token,
-    user: authData.user,
+    const nextSession = {
+      token: authData.token,
+      user: authData.user,
+    }
+
+    sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(nextSession))
+
+    setSession(nextSession)
   }
-
-  sessionStorage.setItem(
-    AUTH_STORAGE_KEY,
-    JSON.stringify(nextSession),
-  )
-
-  setSession(nextSession)
-}
 
   const handleAuthSubmit = async (event) => {
     event.preventDefault()
@@ -199,12 +206,12 @@ function App() {
     }
   }
 
- const logout = () => {
-  sessionStorage.removeItem(AUTH_STORAGE_KEY)
-  setSession(null)
-  setTasks([])
-  setIsMobileMenuOpen(false)
-}
+  const logout = () => {
+    sessionStorage.removeItem(AUTH_STORAGE_KEY)
+    setSession(null)
+    setTasks([])
+    setIsMobileMenuOpen(false)
+  }
 
   const openCreateModal = () => {
     setEditingTask(null)
@@ -378,9 +385,7 @@ function App() {
           <div className="ambient ambient-two" />
           <div className="auth-card reveal-card">
             <div className="brand-row">
-              <div className="brand-mark">
-  {getUserDisplayName(session.user).charAt(0).toUpperCase()}
-</div>
+              <div className="brand-mark">T</div>
               <div>
                 <p className="eyebrow">Task Manager</p>
                 <h1>Welcome back</h1>
@@ -410,7 +415,9 @@ function App() {
                 <input
                   type="email"
                   value={authForm.email}
-                  onChange={(event) => setAuthForm((current) => ({ ...current, email: event.target.value }))}
+                  onChange={(event) =>
+                    setAuthForm((current) => ({ ...current, email: event.target.value }))
+                  }
                   placeholder="you@example.com"
                   required
                 />
@@ -421,28 +428,30 @@ function App() {
                 <input
                   type="password"
                   value={authForm.password}
-                  onChange={(event) => setAuthForm((current) => ({ ...current, password: event.target.value }))}
+                  onChange={(event) =>
+                    setAuthForm((current) => ({ ...current, password: event.target.value }))
+                  }
                   placeholder="Enter your password"
                   required
                 />
               </label>
-              <label className="email-warning-checkbox">
-  <input
-    type="checkbox"
-    required
-  />
-  <span>
-    I understand that Task Manager emails may sometimes be
-    delivered to my Spam/Junk folder.
-  </span>
-  
-</label>
 
+              <label className="email-warning-checkbox">
+                <input type="checkbox" required />
+                <span>
+                  I understand that Task Manager emails may sometimes be delivered to my
+                  Spam/Junk folder.
+                </span>
+              </label>
 
               {authError ? <p className="form-error">{authError}</p> : null}
 
               <button type="submit" className="primary-button" disabled={authLoading}>
-                {authLoading ? 'Please wait...' : authMode === 'login' ? 'Login' : 'Create account'}
+                {authLoading
+                  ? 'Please wait...'
+                  : authMode === 'login'
+                    ? 'Login'
+                    : 'Create account'}
               </button>
             </form>
           </div>
@@ -457,241 +466,267 @@ function App() {
       <div className="dashboard-shell">
         <div className="ambient ambient-one" />
         <div className="ambient ambient-two" />
-      <header className="topbar reveal-card">
-  <div className="brand-row">
-   <div className="brand-mark">
-  {getUserDisplayName(session.user).charAt(0).toUpperCase()}
-</div>
 
-    <div>
-      <p className="eyebrow">Task Manager</p>
-      <h2>Welcome {getUserDisplayName(session.user)}</h2>
-    </div>
-  </div>
-
-  <button
-    type="button"
-    className="mobile-menu-toggle"
-    aria-controls="dashboard-mobile-menu"
-    aria-expanded={isMobileMenuOpen}
-    onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
-  >
-    {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-    <span>{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
-  </button>
-
-  <div
-  id="dashboard-mobile-menu"
-  className={isMobileMenuOpen ? 'topbar-actions open' : 'topbar-actions'}
->
-  <div className="header-search">
-    <input
-      type="search"
-      className="search-input"
-      value={searchTerm}
-      onChange={(event) => setSearchTerm(event.target.value)}
-      placeholder="Search tasks"
-      aria-label="Search tasks"
-    />
-  </div>
-
-  
-
-  <button
-    type="button"
-    className="ghost-button header-logout"
-    onClick={logout}
-  >
-    Logout
-  </button>
-</div>
-</header>
-
-      <main className="content-panel">
-        <section className="stats-grid">
-          <article className="stat-card reveal-card">
-            <span>Total</span>
-            <strong>{taskStats.total}</strong>
-          </article>
-          <article className="stat-card muted reveal-card">
-            <span>Pending</span>
-            <strong>{taskStats.pending}</strong>
-          </article>
-          <article className="stat-card accent reveal-card">
-            <span>In progress</span>
-            <strong>{taskStats.inProgress}</strong>
-          </article>
-          <article className="stat-card success reveal-card">
-            <span>Completed</span>
-            <strong>{taskStats.completed}</strong>
-          </article>
-        </section>
-
-        <div className="toolbar">
-          <div className="filter-group" aria-label="Task status filters">
-            {statusOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={taskFilter === option ? 'filter active' : 'filter'}
-                onClick={() => setTaskFilter(option)}
-              >
-                {option === 'all' ? 'All' : option.replace('_', ' ')}
-              </button>
-            ))}
+        <header className="topbar reveal-card">
+          <div className="brand-row">
+            <div>
+              <p className="eyebrow">Task Manager</p>
+              <h2>Welcome {getUserDisplayName(session.user)}</h2>
+            </div>
           </div>
 
-          <label className="date-filter-label">
-            Due date
-            <input
-              className="date-filter"
-              type="date"
-              value={dueDateFilter}
-              onChange={(event) => setDueDateFilter(event.target.value)}
-              aria-label="Filter tasks by due date"
-            />
-          </label>
-
-          <button type="button" className="primary-button" onClick={openCreateModal}>
-            + New task
+          <button
+            type="button"
+            className="mobile-menu-toggle"
+            aria-controls="dashboard-mobile-menu"
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+          >
+            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            <span>{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
           </button>
-        </div>
 
-        {taskError ? <p className="form-error wide-error">{taskError}</p> : null}
-
-        <section className="task-list">
-          {filteredTasks.length === 0 ? (
-            <div className="empty-state">
-              <h3>No tasks match this view</h3>
-              <p>Create a new task to get started.</p>
-            </div>
-          ) : (
-            filteredTasks.map((task) => (
-              <article key={task.id} className="task-card reveal-card">
-                {task.imageUrl ? (
-                  <img src={task.thumbnailUrl || task.imageUrl} alt={task.title} className="task-image" />
-                ) : null}
-
-                <div className="task-content">
-                  <div className="task-header">
-                    <div>
-                      <h3>{task.title}</h3>
-                      <p className="task-date">Due: {formatDate(task.dueDate)}</p>
-                    </div>
-                    <span className={`status-badge ${task.status}`}>
-                      {task.status === 'in_progress' ? 'In progress' : task.status}
-                    </span>
-                  </div>
-
-                  <p className="task-description">{task.description || 'No description provided.'}</p>
-
-                  <div className="task-actions">
-                    <select
-                      value={task.status}
-                      onChange={(event) => changeTaskStatus(task.id, event.target.value)}
-                      aria-label={`Update status for ${task.title}`}
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="in_progress">In progress</option>
-                      <option value="completed">Completed</option>
-                    </select>
-
-                    <div className="inline-actions">
-                      <button type="button" className="secondary-button" onClick={() => openEditModal(task)}>
-                        Edit
-                      </button>
-                      <button type="button" className="ghost-button danger" onClick={() => handleDeleteTask(task.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            ))
-          )}
-        </section>
-      </main>
-
-      {isModalOpen ? (
-        <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
-          <div className="task-modal" onClick={(event) => event.stopPropagation()}>
-            <div className="modal-header">
-              <h3>{editingTask ? 'Edit task' : 'Create task'}</h3>
-              <button type="button" className="icon-close" onClick={() => setIsModalOpen(false)} aria-label="Close task form">
-                ×
-              </button>
+          <div
+            id="dashboard-mobile-menu"
+            className={isMobileMenuOpen ? 'topbar-actions open' : 'topbar-actions'}
+          >
+            <div className="header-search">
+              <input
+                type="search"
+                className="search-input"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search tasks"
+                aria-label="Search tasks"
+              />
             </div>
 
-            <form onSubmit={handleTaskSubmit} className="task-form">
-              <label>
-                Title
-                <input
-                  type="text"
-                  name="title"
-                  required
-                  value={taskForm.title}
-                  onChange={handleTaskInput}
-                  placeholder="Task title"
-                />
-              </label>
+            <button type="button" className="ghost-button header-logout" onClick={logout}>
+              Logout
+            </button>
+          </div>
+        </header>
 
-              <label>
-                Description
-                <textarea
-                  name="description"
-                  rows="4"
-                  value={taskForm.description}
-                  onChange={handleTaskInput}
-                  placeholder="Add more details"
-                />
-              </label>
+        <main className="content-panel">
+          <section className="stats-grid">
+            <article className="stat-card reveal-card">
+              <span>Total</span>
+              <strong>{taskStats.total}</strong>
+            </article>
+            <article className="stat-card muted reveal-card">
+              <span>Pending</span>
+              <strong>{taskStats.pending}</strong>
+            </article>
+            <article className="stat-card accent reveal-card">
+              <span>In progress</span>
+              <strong>{taskStats.inProgress}</strong>
+            </article>
+            <article className="stat-card success reveal-card">
+              <span>Completed</span>
+              <strong>{taskStats.completed}</strong>
+            </article>
+          </section>
 
-              <div className="two-column">
+          <div className="toolbar">
+            <div className="filter-group" aria-label="Task status filters">
+              {statusOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className={taskFilter === option ? 'filter active' : 'filter'}
+                  onClick={() => setTaskFilter(option)}
+                >
+                  {option === 'all' ? 'All' : getStatusLabel(option)}
+                </button>
+              ))}
+            </div>
+
+            <label className="date-filter-label">
+              Due date
+              <input
+                className="date-filter"
+                type="date"
+                value={dueDateFilter}
+                onChange={(event) => setDueDateFilter(event.target.value)}
+                aria-label="Filter tasks by due date"
+              />
+            </label>
+
+            <button type="button" className="primary-button" onClick={openCreateModal}>
+              + New task
+            </button>
+          </div>
+
+          {taskError ? <p className="form-error wide-error">{taskError}</p> : null}
+
+          <section className="task-list">
+            {filteredTasks.length === 0 ? (
+              <div className="empty-state">
+                <h3>No tasks match this view</h3>
+                <p>Create a new task to get started.</p>
+              </div>
+            ) : (
+              filteredTasks.map((task) => (
+                <article key={task.id} className="task-card reveal-card">
+                  {task.imageUrl ? (
+                    <img
+                      src={task.thumbnailUrl || task.imageUrl}
+                      alt={task.title}
+                      className="task-image"
+                    />
+                  ) : null}
+
+                  <div className="task-content">
+                    <div className="task-header">
+                      <div>
+                        <h3>{task.title}</h3>
+                        <p className="task-date">Due: {formatDate(task.dueDate)}</p>
+                      </div>
+                      <span className={`status-badge ${task.status}`}>
+                        {getStatusLabel(task.status)}
+                      </span>
+                    </div>
+
+                    <p className="task-description">
+                      {task.description || 'No description provided.'}
+                    </p>
+
+                    <div className="task-actions">
+                      <select
+                        value={task.status}
+                        onChange={(event) => changeTaskStatus(task.id, event.target.value)}
+                        aria-label={`Update status for ${task.title}`}
+                      >
+                        {TASK_STATUSES.map((s) => (
+                          <option key={s.value} value={s.value}>
+                            {s.label}
+                          </option>
+                        ))}
+                      </select>
+
+                      <div className="inline-actions">
+                        <button
+                          type="button"
+                          className="secondary-button"
+                          onClick={() => openEditModal(task)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="ghost-button danger"
+                          onClick={() => handleDeleteTask(task.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))
+            )}
+          </section>
+        </main>
+
+        {isModalOpen ? (
+          <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
+            <div className="task-modal" onClick={(event) => event.stopPropagation()}>
+              <div className="modal-header">
+                <h3>{editingTask ? 'Edit task' : 'Create task'}</h3>
+                <button
+                  type="button"
+                  className="icon-close"
+                  onClick={() => setIsModalOpen(false)}
+                  aria-label="Close task form"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleTaskSubmit} className="task-form">
                 <label>
-                  Status
-                  <select name="status" value={taskForm.status} onChange={handleTaskInput}>
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In progress</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </label>
-
-                <label>
-                  Due date
+                  Title
                   <input
-                    type="date"
-                    name="dueDate"
-                    value={taskForm.dueDate}
+                    type="text"
+                    name="title"
+                    required
+                    value={taskForm.title}
                     onChange={handleTaskInput}
+                    placeholder="Task title"
                   />
                 </label>
-              </div>
 
-              <label>
-                Task image
-                <input type="file" name="image" accept="image/*" />
-              </label>
+                <label>
+                  Description
+                  <textarea
+                    name="description"
+                    rows="4"
+                    value={taskForm.description}
+                    onChange={handleTaskInput}
+                    placeholder="Add more details"
+                  />
+                </label>
 
-              {taskForm.imageUrl ? (
-                <div className="image-preview-wrap">
-                  <img src={taskForm.imageUrl} alt="Task preview" className="image-preview" />
+                <div className="two-column">
+                  <label>
+                    Status
+                    <select name="status" value={taskForm.status} onChange={handleTaskInput}>
+                      {TASK_STATUSES.map((s) => (
+                        <option key={s.value} value={s.value}>
+                          {s.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label>
+                    Due date
+                    <input
+                      type="date"
+                      name="dueDate"
+                      value={taskForm.dueDate}
+                      onChange={handleTaskInput}
+                    />
+                  </label>
                 </div>
-              ) : null}
 
-              {taskError ? <p className="form-error">{taskError}</p> : null}
+                <label>
+                  Task image
+                  <input type="file" name="image" accept="image/*" />
+                </label>
 
-              <div className="modal-actions">
-                <button type="button" className="ghost-button" onClick={() => setIsModalOpen(false)}>
-                  Cancel
-                </button>
-                <button type="submit" className="primary-button" disabled={taskLoading || uploadingImage}>
-                  {taskLoading || uploadingImage ? 'Saving...' : editingTask ? 'Update task' : 'Create task'}
-                </button>
-              </div>
-            </form>
+                {taskForm.imageUrl ? (
+                  <div className="image-preview-wrap">
+                    <img src={taskForm.imageUrl} alt="Task preview" className="image-preview" />
+                  </div>
+                ) : null}
+
+                {taskError ? <p className="form-error">{taskError}</p> : null}
+
+                <div className="modal-actions">
+                  <button
+                    type="button"
+                    className="ghost-button"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="primary-button"
+                    disabled={taskLoading || uploadingImage}
+                  >
+                    {taskLoading || uploadingImage
+                      ? 'Saving...'
+                      : editingTask
+                        ? 'Update task'
+                        : 'Create task'}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
       </div>
     </>
   )
