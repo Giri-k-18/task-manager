@@ -59,7 +59,7 @@ test('invalid app URLs fall back to a local dashboard URL', () => {
 
   assert.match(
     email.html,
-   /href="https:\/\/task-manager-m9chq5ny1-girikumar123s-projects\.vercel\.app"/
+   /href="https:\/\/task-manager-roan-seven-63\.vercel\.app"/
   )
 })
 
