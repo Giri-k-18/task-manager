@@ -1,4 +1,4 @@
-const DEFAULT_APP_URL = 'https://task-manager-m9chq5ny1-girikumar123s-projects.vercel.app'
+const DEFAULT_APP_URL = 'https://task-manager-roan-seven-63.vercel.app'
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => {
